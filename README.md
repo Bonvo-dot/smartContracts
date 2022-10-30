@@ -1,8 +1,8 @@
-# Sample Hardhat Project
+# Bonvo project
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Bonvo is an oracle project, specially for real state rent, where users can update its rate, and get lists of houses, where to get rents near to its location.
 
-Try running some of the following tasks:
+You can run bonvo project, with this commands:
 
 ```shell
 npx hardhat help
