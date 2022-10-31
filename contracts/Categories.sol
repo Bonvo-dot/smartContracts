@@ -20,12 +20,13 @@ contract Categories is AccessControl, IBonvo {
         revokeRole(ADMIN_CATEGORIES, adminCategories);
     }
 
-    function addCategory(string calldata _name) public onlyRole(ADMIN_CATEGORIES) {
+    function addCategory(string calldata _name,string calldata _description ) public onlyRole(ADMIN_CATEGORIES) {
         require(bytes(_name).length > 0, "Not valid name");
         uint id = categories.length;
         AssetCategory memory assetCategory = AssetCategory({
             idCategory: id,
-            name: _name
+            name: _name,
+            description: _description
         });
         categories.push(assetCategory);
     }
