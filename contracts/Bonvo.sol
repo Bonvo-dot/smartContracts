@@ -3,16 +3,24 @@ pragma solidity ^0.8.9;
 
 import './IBonvo.sol';
 import './Categories.sol';
+import './Token.sol';
+import './Rewards.sol';
 
-contract Bonvo is IBonvo, Categories {
+contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards {
     mapping (address => Asset) assets;
     mapping (address => User) users;
     Rate[] rates;
     Rent[] rents;
+    address owner;
+
+    constructor() TokenBonvo(msg.sender){
+        owner = msg.sender;
+    }
     
     function createAsset(address _assetId, Asset memory _asset) external {
         require(_assetId != address(0), "Valid asset address required");
         assets[_assetId] = _asset;
+        transferFrom(owner, msg.sender, CREATE_ASSET_REWARD);
     }
 
     function createUser(address idUser, User memory _user) external {
@@ -33,6 +41,8 @@ contract Bonvo is IBonvo, Categories {
             asset: _assetId
         });
         rates.push(rate);
+
+        transferFrom(owner, msg.sender, RATE_REWARD);
     }
 
     function addRent(address _assetId) public {
@@ -45,6 +55,7 @@ contract Bonvo is IBonvo, Categories {
             renter: msg.sender
         });
         rents.push(rent);
+        transferFrom(owner, msg.sender, RENT_REWARD);
     }
 
 }
