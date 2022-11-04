@@ -5,7 +5,7 @@ import './IBonvo.sol';
 
 contract Categories is AccessControl, IBonvo {
     bytes32 public constant ADMIN_CATEGORIES = keccak256("ADMIN_CATEGORIES");
-    AssetCategory[] categories;
+    AssetCategory[] public categories;
 
     constructor(){
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);

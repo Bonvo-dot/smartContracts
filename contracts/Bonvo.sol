@@ -7,11 +7,11 @@ import './Token.sol';
 import './Rewards.sol';
 
 contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards {
-    mapping (address => Asset) assets;
-    mapping (address => User) users;
-    Rate[] rates;
-    Rent[] rents;
-    address owner;
+    mapping (address => Asset) public assets;
+    mapping (address => User) public users;
+    Rate[] public rates;
+    Rent[] public rents;
+    address public owner;
 
     constructor() TokenBonvo(msg.sender){
         owner = msg.sender;
