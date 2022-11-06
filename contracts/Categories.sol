@@ -11,6 +11,18 @@ contract Categories is AccessControl, IBonvo {
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
+    function getCategories() public view returns (string memory){
+        string memory cat = "{";
+        for(uint i = 0;i < categories.length; i++){
+            string memory element = string(abi.encodePacked("{id:", categories[i].idCategory, ", category:", categories[i].name, "}"));
+            if(i != categories.length - 1){
+                element = string(abi.encodePacked(element, ","));
+            }
+            cat = string(abi.encodePacked(cat, element));
+        }
+        return string(abi.encodePacked(cat, "}"));
+    }
+
     function setAdminCategoriesRole(address newAdminCategories) public onlyRole(DEFAULT_ADMIN_ROLE) {
         grantRole(ADMIN_CATEGORIES, newAdminCategories);
     }

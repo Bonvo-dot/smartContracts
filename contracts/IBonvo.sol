@@ -34,7 +34,7 @@ interface IBonvo {
     }
     struct Rent {
         uint idRent;
-        address assetId;
+        uint assetId;
         address renter;
     }
 
@@ -43,7 +43,7 @@ interface IBonvo {
         uint8 rate;
         string argue;
         address rater;
-        address asset;
+        uint assetId;
     }
 
 }
