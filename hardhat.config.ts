@@ -7,7 +7,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.9",
   // networks: {
   //   mumbai: {
-  //     url: process.env.TESTNET_RPC,
+  //     url: process.env.POLYGON_RPC,
   //     accounts: [process.env.PRIVATE_KEY || "default"],
   //   },
   // },
@@ -16,8 +16,8 @@ const config: HardhatUserConfig = {
   // },
   networks: {
     moonbeam: {
-      url: process.env.TESTNET_RPC,
-      chainId: 1287,
+      url: process.env.MOONBASE_RPC,
+      chainId: 0x507,
       accounts: [process.env.PRIVATE_KEY || "default"],
     },
   },

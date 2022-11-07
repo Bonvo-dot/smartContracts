@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 
 interface IBonvo {
     struct Asset {
-        address assetId;
+        uint assetId;
         string title;
         address owner;
         uint price;
@@ -16,6 +16,7 @@ interface IBonvo {
         uint8 assetCategory;
         string location;
         uint idCategory;
+        string ISOCountry;
     }
 
     struct AssetCategory {
