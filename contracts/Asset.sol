@@ -5,14 +5,14 @@ import './IBonvo.sol';
 import './Utils.sol';
 
 abstract contract Asset is IBonvo {
-    mapping (string => Asset[]) public assetsByCountry;
+    mapping (string => mapping (uint => Asset)) public assetsByCountry;
+    mapping (string=>uint) public counterAssetsByCountry;
     mapping (uint => Asset) public assetsByTokenId;
 
     function saveInMapping(Asset memory _asset) internal{
-        uint size = assetsByCountry[_asset.ISOCountry].length;
-        Asset[] memory tempAssets = new Asset[](size+1);
-        tempAssets[size] = _asset;
-        assetsByCountry[_asset.ISOCountry] = tempAssets;
+        uint size = counterAssetsByCountry[_asset.ISOCountry];
+        assetsByCountry[_asset.ISOCountry][size+1] = _asset;
+        counterAssetsByCountry[_asset.ISOCountry] = size+1;
     }
 
     function assetsNearMeNotCategory(int latitude, int longitude, string calldata ISOCountry) public view returns(Asset[] memory){
@@ -20,7 +20,7 @@ abstract contract Asset is IBonvo {
     }
 
     function assetsNearMeCategory(int latitude, int longitude, string calldata ISOCountry, uint categoyId) public view returns(Asset[] memory){
-        Asset[] memory countryAssets = filterByCategory(assetsByCountry[ISOCountry], categoyId);
+        Asset[] memory countryAssets = filterByCategory(ISOCountry, categoyId);
         bool sorted = false;
         while(!sorted) {
             sorted = true;
@@ -41,18 +41,20 @@ abstract contract Asset is IBonvo {
         return countryAssets;
     }
 
-    function filterByCategory(Asset[] memory iAssets, uint categoryId) pure internal returns(Asset[] memory){
-        if(categoryId == 0){
-            return iAssets;
-        }
-        uint size = iAssets.length;
+    function filterByCategory(string calldata ISOCountry, uint categoryId) view internal returns(Asset[] memory){
+        uint size = counterAssetsByCountry[ISOCountry];
         Asset[] memory tempAssets = new Asset[](size); 
         uint c = 0;
         for(uint i = 0; i < size; i++){
-            if(iAssets[i].idCategory == categoryId){
-                tempAssets[c] = iAssets[i];
-                c++;
+            if(categoryId == 0){
+                tempAssets[i] = assetsByCountry[ISOCountry][i];
+            }else{
+                if(assetsByCountry[ISOCountry][i].idCategory == categoryId){
+                    tempAssets[c] = assetsByCountry[ISOCountry][i];
+                    c++;
+                }
             }
+
         }
         return tempAssets;
     }

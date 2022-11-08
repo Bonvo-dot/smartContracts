@@ -9,13 +9,12 @@ import './Rewards.sol';
 import './NftAsset.sol';
 import './Asset.sol';
 import './Rates.sol';
+import './Rents.sol';
 
-contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates {
+contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates, Rents {
     using Strings for uint256;
     address public owner;
     mapping (address => User) public users;
-    mapping (address => Rent[]) public myRents;
-    Rent[] public rents;
     NftAsset nft = new NftAsset();
     Rewards public r = new Rewards();
 
@@ -41,15 +40,6 @@ contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates {
         transferFrom(owner, msg.sender, RENT_REWARD);
     }
 
-    function saveRent(Rent memory rent) internal{
-        rents.push(rent);
-        Rent[] memory tempRents = myRents[msg.sender];
-        uint size = tempRents.length;
-        Rent[] memory rentToMyRents = new Rent[](size + 1);
-        rentToMyRents[size] = rent;
-        myRents[msg.sender] = rentToMyRents;
-    }
-
     function addRate(uint8 _rate, string calldata _argue, uint _assetId) public {
         require(_assetId != 0 && _rate != 0, "Not valid values");
         require(assetsByTokenId[_assetId].latitude != 0, "Inexistent asset");
@@ -65,7 +55,7 @@ contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates {
         ratesArray.push(rate);
 
         saveAssetRate(rate, _assetId);
-        saveUserRate(rate);
+        saveUserRate(rate, msg.sender);
         transferFrom(owner, msg.sender, r.RATE_REWARD());
     }
 

@@ -1,26 +1,41 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
-import './Asset.sol';
 import './IBonvo.sol';
 
 abstract contract Rates is IBonvo{
-    mapping(uint => Rate[]) public assetRates;
-    mapping(address => Rate[]) public userRates;
+    mapping(uint => mapping(uint =>Rate)) public assetRates;
+    mapping(uint => uint) countAssetRates;
+    mapping(address => mapping(uint =>Rate)) public userRates;
+    mapping(address => uint) countUserRates;
     Rate[] public ratesArray;
 
     function saveAssetRate(Rate memory rate, uint _assetId) internal {
-        Rate[] memory tempRates = assetRates[_assetId];
-        uint tempSize = tempRates.length;
-        Rate[] memory ratesForAsset = new Rate[](tempSize+1);
-        ratesForAsset[tempSize] = rate;
-        assetRates[_assetId] = ratesForAsset;
+        uint size = countAssetRates[_assetId];
+        assetRates[_assetId][size+1] = rate;
+        countAssetRates[_assetId] = size+1;
     }
     
-    function saveUserRate(Rate memory rate) internal {
-        Rate[] memory tempRates = userRates[msg.sender];
-        uint tempSize = tempRates.length;
-        Rate[] memory ratesForUser = new Rate[](tempSize+1);
-        ratesForUser[tempSize] = rate;
-        userRates[msg.sender] = ratesForUser;    
+    function saveUserRate(Rate memory rate, address user) internal {
+        uint size = countUserRates[user];
+        userRates[user][size+1] = rate;
+        countUserRates[user] = size+1; 
+    }
+
+    function getAssetRates(uint assetId) public view returns(Rate[] memory){
+        uint size = countAssetRates[assetId];
+        Rate[] memory rates = new Rate[](size);
+        for (uint256 i = 0; i < size; i++) {
+            rates[i] = assetRates[assetId][i];
+        }
+        return rates;
+    }
+    
+    function getUserRates(address user) public view returns(Rate[] memory){
+        uint size = countUserRates[user];
+        Rate[] memory rates = new Rate[](size);
+        for (uint256 i = 0; i < size; i++) {
+            rates[i] = userRates[user][i];
+        }
+        return rates;
     }
 }
