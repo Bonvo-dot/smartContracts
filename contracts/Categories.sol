@@ -9,6 +9,7 @@ contract Categories is AccessControl, IBonvo {
 
     constructor(){
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _setupRole(ADMIN_CATEGORIES, msg.sender);
     }
 
     function getCategories() public view returns (string memory){
