@@ -11,8 +11,13 @@ import './Asset.sol';
 import './Rates.sol';
 
 contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates {
+    using Strings for uint256;
+    address public owner;
     mapping (address => User) public users;
+    mapping (address => Rent[]) public myRents;
     Rent[] public rents;
+    NftAsset nft = new NftAsset();
+    Rewards public r = new Rewards();
 
     constructor() TokenBonvo(msg.sender){
         owner = msg.sender;
@@ -32,8 +37,47 @@ contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates {
             assetId: _assetId,
             renter: msg.sender
         });
-        rents.push(rent);
+        saveRent(rent);
         transferFrom(owner, msg.sender, RENT_REWARD);
+    }
+
+    function saveRent(Rent memory rent) internal{
+        rents.push(rent);
+        Rent[] memory tempRents = myRents[msg.sender];
+        uint size = tempRents.length;
+        Rent[] memory rentToMyRents = new Rent[](size + 1);
+        rentToMyRents[size] = rent;
+        myRents[msg.sender] = rentToMyRents;
+    }
+
+    function addRate(uint8 _rate, string calldata _argue, uint _assetId) public {
+        require(_assetId != 0 && _rate != 0, "Not valid values");
+        require(assetsByTokenId[_assetId].latitude != 0, "Inexistent asset");
+
+        uint id = ratesArray.length;
+        Rate memory rate = Rate({
+            idRate: id,
+            rate: _rate,
+            argue: _argue,
+            rater: msg.sender,
+            assetId: _assetId
+        });
+        ratesArray.push(rate);
+
+        saveAssetRate(rate, _assetId);
+        saveUserRate(rate);
+        transferFrom(owner, msg.sender, r.RATE_REWARD());
+    }
+
+    function createAsset(Asset memory _asset) external {
+        string memory uris = "";
+        for(uint i = 0; i < _asset.images.length; i++){
+            uris = string(abi.encodePacked(uris, _asset.images[i]));
+        }
+        uint tokenId = nft.mint(msg.sender, uris);
+        _asset.assetId = tokenId;
+        saveInMapping(_asset);
+        transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }
 
 }

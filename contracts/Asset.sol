@@ -2,29 +2,11 @@
 pragma solidity ^0.8.9;
 
 import './IBonvo.sol';
-import './Categories.sol';
-import './Token.sol';
-import './Rewards.sol';
-import './NftAsset.sol';
 import './Utils.sol';
 
-abstract contract Asset is IBonvo, Categories, TokenBonvo, Rewards {
+abstract contract Asset is IBonvo {
     mapping (string => Asset[]) public assetsByCountry;
     mapping (uint => Asset) public assetsByTokenId;
-    NftAsset nft = new NftAsset();
-    using Strings for uint256;
-    address public owner;
-
-    function createAsset(Asset memory _asset) external {
-        string memory uris = "";
-        for(uint i = 0; i < _asset.images.length; i++){
-            uris = string(abi.encodePacked(uris, _asset.images[i]));
-        }
-        uint tokenId = nft.mint(msg.sender, uris);
-        _asset.assetId = tokenId;
-        saveInMapping(_asset);
-        transferFrom(owner, msg.sender, CREATE_ASSET_REWARD);
-    }
 
     function saveInMapping(Asset memory _asset) internal{
         uint size = assetsByCountry[_asset.ISOCountry].length;
