@@ -16,7 +16,7 @@ interface IBonvo {
         uint8 assetCategory;
         string location;
         uint idCategory;
-        string ISOCountry;
+        uint countryCode;
     }
 
     struct AssetCategory {

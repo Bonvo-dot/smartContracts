@@ -23,9 +23,9 @@ contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset {
         users[idUser] = _user;
     } 
 
-    function addRate(uint8 _rate, string calldata _argue, uint _assetId, string memory ISOCountry) public {
+    function addRate(uint8 _rate, string calldata _argue, uint _assetId, uint countryCode) public {
         require(_assetId != 0 && _rate != 0, "Not valid values");
-        require(assets[ISOCountry][_assetId].assetId != 0, "Inexistent asset address");
+        require(assets[countryCode][_assetId].assetId != 0, "Inexistent asset address");
 
         uint id = rates.length;
         Rate memory rate = Rate({
@@ -40,9 +40,9 @@ contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset {
         transferFrom(owner, msg.sender, RATE_REWARD);
     }
 
-    function addRent(uint _assetId, string memory ISOCountry) public {
+    function addRent(uint _assetId, uint countryCode) public {
         require(_assetId != 0, "Null address");
-        require(assets[ISOCountry][_assetId].assetId != 0, "Inexistent asset address");
+        require(assets[countryCode][_assetId].assetId != 0, "Inexistent asset address");
         uint id = rents.length;
         Rent memory rent = Rent({
             idRent: id,

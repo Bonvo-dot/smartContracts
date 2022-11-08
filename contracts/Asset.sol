@@ -9,7 +9,7 @@ import './NftAsset.sol';
 import './Utils.sol';
 
 abstract contract Asset is IBonvo, Categories, TokenBonvo, Rewards {
-    mapping (string => Asset[]) public assets;
+    mapping (uint => Asset[]) public assets;
     mapping (uint => Asset) private orderedAssets;
     NftAsset nft = new NftAsset();
     using Strings for uint256;
@@ -26,18 +26,18 @@ abstract contract Asset is IBonvo, Categories, TokenBonvo, Rewards {
     }
 
     function saveInMapping(Asset memory _asset) internal{
-        uint size = assets[_asset.ISOCountry].length;
+        uint size = assets[_asset.countryCode].length;
         Asset[] memory tempAssets = new Asset[](size+1);
         tempAssets[size] = _asset;
-        assets[_asset.ISOCountry] = tempAssets;
+        assets[_asset.countryCode] = tempAssets;
     }
 
-    function assetsNearMeNotCategory(int latitude, int longitude, string calldata ISOCountry) public view returns(Asset[] memory){
-        return assetsNearMeCategory(latitude, longitude, ISOCountry, 0);
+    function assetsNearMeNotCategory(int latitude, int longitude, uint countryCode) public view returns(Asset[] memory){
+        return assetsNearMeCategory(latitude, longitude, countryCode, 0);
     }
 
-    function assetsNearMeCategory(int latitude, int longitude, string calldata ISOCountry, uint categoyId) public view returns(Asset[] memory){
-        Asset[] memory countryAssets = filterByCategory(assets[ISOCountry], categoyId);
+    function assetsNearMeCategory(int latitude, int longitude, uint countryCode, uint categoyId) public view returns(Asset[] memory){
+        Asset[] memory countryAssets = filterByCategory(assets[countryCode], categoyId);
 
         Asset[] memory ordered = new Asset[](10);
         for(uint i = 0; i < countryAssets.length - 1; i++){
