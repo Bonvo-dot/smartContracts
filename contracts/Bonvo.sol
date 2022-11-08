@@ -7,11 +7,11 @@ import './Categories.sol';
 import './Token.sol';
 import './Rewards.sol';
 import './NftAsset.sol';
-import './Asset.sol';
+import './Assets.sol';
 import './Rates.sol';
 import './Rents.sol';
 
-contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates, Rents {
+contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Assets, Rates, Rents {
     using Strings for uint256;
     address public owner;
     mapping (address => User) public users;
@@ -65,8 +65,7 @@ contract Bonvo is IBonvo, Categories, TokenBonvo, Rewards, Asset, Rates, Rents {
             uris = string(abi.encodePacked(uris, _asset.images[i]));
         }
         uint tokenId = nft.mint(msg.sender, uris);
-        _asset.assetId = tokenId;
-        saveInMapping(_asset);
+        saveInMapping(_asset, tokenId);
         transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }
 

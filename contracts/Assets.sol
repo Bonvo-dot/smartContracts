@@ -4,15 +4,16 @@ pragma solidity ^0.8.9;
 import './IBonvo.sol';
 import './Utils.sol';
 
-abstract contract Asset is IBonvo {
+abstract contract Assets is IBonvo {
     mapping (string => mapping (uint => Asset)) public assetsByCountry;
     mapping (string=>uint) public counterAssetsByCountry;
     mapping (uint => Asset) public assetsByTokenId;
 
-    function saveInMapping(Asset memory _asset) internal{
+    function saveInMapping(Asset memory _asset, uint tokenId) internal{
         uint size = counterAssetsByCountry[_asset.ISOCountry];
         assetsByCountry[_asset.ISOCountry][size+1] = _asset;
         counterAssetsByCountry[_asset.ISOCountry] = size+1;
+        assetsByTokenId[tokenId] = _asset;
     }
 
     function assetsNearMeNotCategory(int latitude, int longitude, string calldata ISOCountry) public view returns(Asset[] memory){
