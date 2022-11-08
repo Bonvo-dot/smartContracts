@@ -9,7 +9,7 @@ import './NftAsset.sol';
 import './Utils.sol';
 
 abstract contract Asset is IBonvo, Categories, TokenBonvo, Rewards {
-    mapping (uint => Asset[]) public assets;
+    mapping (string => Asset[]) public assets;
     mapping (uint => Asset) private orderedAssets;
     NftAsset nft = new NftAsset();
     using Strings for uint256;
@@ -26,33 +26,36 @@ abstract contract Asset is IBonvo, Categories, TokenBonvo, Rewards {
     }
 
     function saveInMapping(Asset memory _asset) internal{
-        uint size = assets[_asset.countryCode].length;
+        uint size = assets[_asset.ISOCountry].length;
         Asset[] memory tempAssets = new Asset[](size+1);
         tempAssets[size] = _asset;
-        assets[_asset.countryCode] = tempAssets;
+        assets[_asset.ISOCountry] = tempAssets;
     }
 
-    function assetsNearMeNotCategory(int latitude, int longitude, uint countryCode) public view returns(Asset[] memory){
-        return assetsNearMeCategory(latitude, longitude, countryCode, 0);
+    function assetsNearMeNotCategory(int latitude, int longitude, string calldata ISOCountry) public view returns(Asset[] memory){
+        return assetsNearMeCategory(latitude, longitude, ISOCountry, 0);
     }
 
-    function assetsNearMeCategory(int latitude, int longitude, uint countryCode, uint categoyId) public view returns(Asset[] memory){
-        Asset[] memory countryAssets = filterByCategory(assets[countryCode], categoyId);
+    function assetsNearMeCategory(int latitude, int longitude, string calldata ISOCountry, uint categoyId) public view returns(Asset[] memory){
+        Asset[] memory countryAssets = filterByCategory(assets[ISOCountry], categoyId);
+        bool sorted = false;
+        while(!sorted) {
+            sorted = true;
+            for(uint i = 0; i < countryAssets.length ; i++){
+                Asset memory a0 = countryAssets[i-1];
+                uint d0 = Utils.diagDist(latitude, a0.latitude, longitude, a0.longitude);
+                Asset memory a1 = countryAssets[i];
+                uint d1 = Utils.diagDist(latitude, a1.latitude, longitude, a1.longitude);
 
-        Asset[] memory ordered = new Asset[](10);
-        for(uint i = 0; i < countryAssets.length - 1; i++){
-            Asset memory a0 = countryAssets[i];
-            uint d0 = Utils.diagDist(latitude, a0.latitude, longitude, a0.longitude);
-            Asset memory a1 = countryAssets[i+1];
-            uint d1 = Utils.diagDist(latitude, a1.latitude, longitude, a1.longitude);
-
-            if(d0 > d1 ){
-                ordered[i+1] = a0;
-                ordered[i] = a1;   
+                if(d1 < d0 ){
+                    countryAssets[i] = a0;
+                    countryAssets[i-1] = a1;
+                    sorted = false;   
+                }
             }
-            ordered[i] = a0;
         }
-        return ordered;
+
+        return countryAssets;
     }
 
     function filterByCategory(Asset[] memory iAssets, uint categoryId) pure internal returns(Asset[] memory){
@@ -60,14 +63,14 @@ abstract contract Asset is IBonvo, Categories, TokenBonvo, Rewards {
             return iAssets;
         }
         uint size = iAssets.length;
-        Asset[] memory tAssets = new Asset[](size); 
+        Asset[] memory tempAssets = new Asset[](size); 
         uint c = 0;
         for(uint i = 0; i < size; i++){
             if(iAssets[i].idCategory == categoryId){
-                tAssets[c] = iAssets[i];
+                tempAssets[c] = iAssets[i];
                 c++;
             }
         }
-        return tAssets;
+        return tempAssets;
     }
 }

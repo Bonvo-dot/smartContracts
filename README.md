@@ -78,11 +78,13 @@ haciendo transparente esa información en la blockchain.
 
 El proyecto consiste en smart contracts desarrollados en solidity y desplegados sobre moonbeam.
 
-LOs contratos basicamente constan de dos structs principales, uno para guardar perfiles de usuario (USERS) y otro para guardar activos (ASSETS) en donde se registran las casas y otros, a rentar.
+Los contratos basicamente constan de dos structs principales, uno para guardar perfiles de usuario (USERS) y otro para guardar activos (ASSETS) en donde se registran las casas y otros, a rentar.
 
 Los usuarios añaden sus calificaciones en un modelo llamado RATE y registran el alquiler de sus bienes en otro modelo llamado RENT.
 
 Los ASSETS además siguen el estándar ERC-721 que registra cada uno, como un NFT individual.
+
+Para instalar el sistema, siga las instrucciones del archivo install.md
 
 ## **12. Enlace de la demostración del proyecto (url de la página)**
 
