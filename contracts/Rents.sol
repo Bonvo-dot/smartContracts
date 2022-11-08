@@ -7,7 +7,12 @@ abstract contract Rents is IBonvo{
     mapping (address => uint) public countRents;
     Rent[] rents;
 
-    function saveRent(Rent memory rent) internal{
+    function saveRent(uint id, uint _assetId) internal{
+        Rent memory rent = Rent({
+            idRent: id,
+            assetId: _assetId,
+            renter: msg.sender
+        });
         rents.push(rent);
         uint size = countRents[msg.sender];
         myRents[msg.sender][size+1] = rent;

@@ -31,6 +31,7 @@ interface IBonvo {
         int reputation;
         string image;
     }
+    
     struct Rent {
         uint idRent;
         uint assetId;
