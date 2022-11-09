@@ -11,6 +11,9 @@ contract TokenBonvo is ERC20, AccessControl{
         _setupRole(DEFAULT_ADMIN_ROLE, adminRole);
         _mint(adminRole, 100_000_000_000_000_000_000_000_000);
     }
+    function approve(address owner, address spender, uint256 amount) public {
+        _approve(owner, spender, amount);
+    }
 
     function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE){
         _mint(to, amount);

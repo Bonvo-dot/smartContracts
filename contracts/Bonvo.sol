@@ -33,7 +33,8 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
         require(assetsByTokenId[_assetId].latitude != 0, "Inexistent asset address");
         uint id = rents.length;
         saveRent(id, _assetId);
-        // BNV.transferFrom(owner, msg.sender, r.RENT_REWARD());
+        BNV.approve(owner, msg.sender, r.RENT_REWARD());
+        BNV.transferFrom(owner, msg.sender, r.RENT_REWARD());
     }
 
     function addRate(uint8 _rate, string calldata _argue, uint _assetId) public {
@@ -52,13 +53,15 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
 
         saveAssetRate(rate, _assetId);
         saveUserRate(rate, msg.sender);
-        // BNV.transferFrom(owner, msg.sender, r.RATE_REWARD());
+        BNV.approve(owner, msg.sender, r.RATE_REWARD());
+        BNV.transferFrom(owner, msg.sender, r.RATE_REWARD());
     }
 
     function createAsset(Asset memory _asset) external {
         uint tokenId = nft.mint(msg.sender, _asset.images[0]);
         saveInMapping(_asset, tokenId);
-        // BNV.transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
+        BNV.approve(owner, msg.sender, r.CREATE_ASSET_REWARD());
+        BNV.transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }
 
 }
