@@ -11,13 +11,13 @@ abstract contract Rates is IBonvo{
 
     function saveAssetRate(Rate memory rate, uint _assetId) internal {
         uint size = countAssetRates[_assetId];
-        assetRates[_assetId][size+1] = rate;
+        assetRates[_assetId][size] = rate;
         countAssetRates[_assetId] = size+1;
     }
     
     function saveUserRate(Rate memory rate, address user) internal {
         uint size = countUserRates[user];
-        userRates[user][size+1] = rate;
+        userRates[user][size] = rate;
         countUserRates[user] = size+1; 
     }
 

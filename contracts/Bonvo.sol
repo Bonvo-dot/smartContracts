@@ -28,18 +28,16 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
         users[idUser] = _user;
     } 
 
-    function addRent(uint _assetId) public {
-        require(_assetId != 0, "Null address");
-        require(assetsByTokenId[_assetId].latitude != 0, "Inexistent asset address");
+    function addRent(uint _tokenId) public {
+        require(assetsByTokenId[_tokenId].latitude != 0, "Inexistent asset");
         uint id = rents.length;
-        saveRent(id, _assetId);
-        BNV.approve(owner, msg.sender, r.RENT_REWARD());
-        BNV.transferFrom(owner, msg.sender, r.RENT_REWARD());
+        saveRent(id, _tokenId);
+        BNV.dTransfer(owner, msg.sender, r.RENT_REWARD());
     }
 
-    function addRate(uint8 _rate, string calldata _argue, uint _assetId) public {
-        require(_assetId != 0 && _rate != 0, "Not valid values");
-        require(assetsByTokenId[_assetId].latitude != 0, "Inexistent asset");
+    function addRate(uint8 _rate, string calldata _argue, uint _tokenId) public {
+        require(_rate != 0, "Not valid rate");
+        require(assetsByTokenId[_tokenId].latitude != 0, "Inexistent asset");
 
         uint id = ratesArray.length;
         Rate memory rate = Rate({
@@ -47,21 +45,27 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
             rate: _rate,
             argue: _argue,
             rater: msg.sender,
-            assetId: _assetId
+            assetId: _tokenId
         });
         ratesArray.push(rate);
 
-        saveAssetRate(rate, _assetId);
+        saveAssetRate(rate, _tokenId);
         saveUserRate(rate, msg.sender);
-        BNV.approve(owner, msg.sender, r.RATE_REWARD());
-        BNV.transferFrom(owner, msg.sender, r.RATE_REWARD());
+        BNV.dTransfer(owner, msg.sender, r.RATE_REWARD());
     }
+
+    event Allowance(string, uint);
 
     function createAsset(Asset memory _asset) external {
         uint tokenId = nft.mint(msg.sender, _asset.images[0]);
         saveInMapping(_asset, tokenId);
-        BNV.approve(owner, msg.sender, r.CREATE_ASSET_REWARD());
-        BNV.transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
+        BNV.dTransfer(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }
 
 }
+
+/**
+ASSET
+[0,0xd6dd6c7e69d5fa4178923dac6a239f336e3c40e3, 110, ["https://storage.googleapis.com/bonvo-bucket/adeeaa00-a262-4ef6-b39c-bc3745deef82_post.jpeg"], 45, 12, 1, "Bolivia", ["Casa", "casa", "562 Angel Pisarello", 2, 50]]
+
+*/

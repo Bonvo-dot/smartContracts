@@ -15,7 +15,7 @@ abstract contract Rents is IBonvo{
         });
         rents.push(rent);
         uint size = countRents[msg.sender];
-        myRents[msg.sender][size+1] = rent;
+        myRents[msg.sender][size] = rent;
         countRents[msg.sender] = size+1;
     }
 
