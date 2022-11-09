@@ -16,10 +16,9 @@ interface IBonvo {
         string[] images;
         int latitude;
         int longitude;
-        uint8 assetCategory;
-        uint idCategory;
+        uint8 idCategory;
         string ISOCountry;
-        StaticDataAsset data;
+        StaticDataAsset staticData;
     }
 
     struct AssetCategory {
