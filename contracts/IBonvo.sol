@@ -2,19 +2,24 @@
 pragma solidity ^0.8.9;
 
 interface IBonvo {
-    struct Asset {
+    struct StaticDataAsset {
         string title;
+        string description;
+        string location;
+        uint rooms;
+        uint size;
+    }
+    struct Asset {
+        uint tokenId;
         address owner;
         uint price;
-        string description;
         string[] images;
         int latitude;
         int longitude;
-        uint rooms;
         uint8 assetCategory;
-        string location;
         uint idCategory;
         string ISOCountry;
+        StaticDataAsset data;
     }
 
     struct AssetCategory {

@@ -55,12 +55,8 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
         // BNV.transferFrom(owner, msg.sender, r.RATE_REWARD());
     }
 
-    function createAsset(Asset memory _asset, string memory uri) external {
-        // string memory uris = "";
-        // for(uint i = 0; i < _asset.images.length; i++){
-        //     uris = string(abi.encodePacked(uris, _asset.images[i]));
-        // }
-        uint tokenId = nft.mint(msg.sender, uri);
+    function createAsset(Asset memory _asset) external {
+        uint tokenId = nft.mint(msg.sender, _asset.images[0]);
         saveInMapping(_asset, tokenId);
         // BNV.transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }

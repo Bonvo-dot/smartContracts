@@ -13,12 +13,12 @@ contract NftAsset is ERC721, ERC721URIStorage {
     Counters.Counter private _tokenIdCounter;
     constructor() ERC721("BnvAsset", "BAs") {}
 
-    function generateJson(uint256 tokenId, string calldata uris) public pure returns (string memory){
+    function generateJson(uint256 tokenId, string calldata uri) public pure returns (string memory){
         bytes memory metadata = abi.encodePacked(
             '{',
                 '"name": "Bnb Asset for:', tokenId.toString(),'",',
                 '"description": "This is an Bonvo asset ",',
-                '"image":"', uris,'"'
+                '"image":"', uri,'"'
             '}'
         );
 
@@ -28,11 +28,11 @@ contract NftAsset is ERC721, ERC721URIStorage {
         ));
     }
 
-    function mint(address to, string calldata uris) public returns (uint256){
+    function mint(address to, string calldata uri) public returns (uint256){
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, generateJson(tokenId, uris));
+        _setTokenURI(tokenId, generateJson(tokenId, uri));
         return tokenId;
     }
 

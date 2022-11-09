@@ -10,6 +10,7 @@ abstract contract Assets is IBonvo {
     mapping (uint => Asset) public assetsByTokenId;
 
     function saveInMapping(Asset memory _asset, uint tokenId) internal{
+        _asset.tokenId = tokenId;
         uint size = counterAssetsByCountry[_asset.ISOCountry];
         assetsByCountry[_asset.ISOCountry][size+1] = _asset;
         counterAssetsByCountry[_asset.ISOCountry] = size+1;
