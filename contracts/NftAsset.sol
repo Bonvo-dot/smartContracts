@@ -18,7 +18,7 @@ contract NftAsset is ERC721, ERC721URIStorage {
             '{',
                 '"name": "Bnb Asset for:', tokenId.toString(),'",',
                 '"description": "This is an Bonvo asset ",',
-                '"images":"[', uris,']"'
+                '"image":"', uris,'"'
             '}'
         );
 

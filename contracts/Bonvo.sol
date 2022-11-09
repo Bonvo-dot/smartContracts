@@ -3,7 +3,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
 import './IBonvo.sol';
-import './Token.sol';
+import './TokenBonvo.sol';
 import './Rewards.sol';
 import './NftAsset.sol';
 import './Assets.sol';
@@ -14,8 +14,8 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
     using Strings for uint256;
     address public owner;
     mapping (address => User) public users;
-    NftAsset nft = new NftAsset();
-    TokenBonvo BNV;
+    NftAsset public nft = new NftAsset();
+    TokenBonvo public BNV;
     Rewards public r = new Rewards();
 
     constructor() {
@@ -33,7 +33,7 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
         require(assetsByTokenId[_assetId].latitude != 0, "Inexistent asset address");
         uint id = rents.length;
         saveRent(id, _assetId);
-        BNV.transferFrom(owner, msg.sender, r.RENT_REWARD());
+        // BNV.transferFrom(owner, msg.sender, r.RENT_REWARD());
     }
 
     function addRate(uint8 _rate, string calldata _argue, uint _assetId) public {
@@ -52,17 +52,17 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
 
         saveAssetRate(rate, _assetId);
         saveUserRate(rate, msg.sender);
-        BNV.transferFrom(owner, msg.sender, r.RATE_REWARD());
+        // BNV.transferFrom(owner, msg.sender, r.RATE_REWARD());
     }
 
-    function createAsset(Asset memory _asset) external {
-        string memory uris = "";
-        for(uint i = 0; i < _asset.images.length; i++){
-            uris = string(abi.encodePacked(uris, _asset.images[i]));
-        }
-        uint tokenId = nft.mint(msg.sender, uris);
+    function createAsset(Asset memory _asset, string memory uri) external {
+        // string memory uris = "";
+        // for(uint i = 0; i < _asset.images.length; i++){
+        //     uris = string(abi.encodePacked(uris, _asset.images[i]));
+        // }
+        uint tokenId = nft.mint(msg.sender, uri);
         saveInMapping(_asset, tokenId);
-        BNV.transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
+        // BNV.transferFrom(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }
 
 }
