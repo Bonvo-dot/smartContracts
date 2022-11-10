@@ -10,8 +10,8 @@ interface IBonvo {
         uint size;
     }
     struct Asset {
-        uint timestamp;
         uint tokenId;
+        uint timestamp;
         address owner;
         uint price;
         string[] images;

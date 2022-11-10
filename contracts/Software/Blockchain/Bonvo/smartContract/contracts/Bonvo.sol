@@ -66,6 +66,6 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
 
 /**
 ASSET
-[0, 1010, 0xd6dd6c7e69d5fa4178923dac6a239f336e3c40e3, 110, ["https://storage.googleapis.com/bonvo-bucket/adeeaa00-a262-4ef6-b39c-bc3745deef82_post.jpeg"], 45, 12, 1, "Bolivia", ["Casa", "casa", "562 Angel Pisarello", 2, 50]]
+[0,0xd6dd6c7e69d5fa4178923dac6a239f336e3c40e3, 110, ["https://storage.googleapis.com/bonvo-bucket/adeeaa00-a262-4ef6-b39c-bc3745deef82_post.jpeg"], 45, 12, 1, "Bolivia", ["Casa", "casa", "562 Angel Pisarello", 2, 50]]
 
 */

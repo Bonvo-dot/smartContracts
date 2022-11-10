@@ -17,47 +17,52 @@ abstract contract Assets is IBonvo {
         assetsByTokenId[tokenId] = _asset;
     }
 
-    function assetsNearMeNotCategory(int latitude, int longitude, string calldata ISOCountry) public view returns(Asset[] memory){
+    function assetsNearMeNotCategory(int latitude, int longitude, string calldata ISOCountry) public view  returns(Asset[] memory){
         return assetsNearMeCategory(latitude, longitude, ISOCountry, 0);
     }
 
-    function assetsNearMeCategory(int latitude, int longitude, string calldata ISOCountry, uint categoyId) public view returns(Asset[] memory){
-        Asset[] memory countryAssets = filterByCategory(ISOCountry, categoyId);
-        bool sorted = false;
-        while(!sorted) {
-            sorted = true;
-            for(uint i = 0; i < countryAssets.length ; i++){
-                Asset memory a0 = countryAssets[i-1];
+    function assetsNearMeCategory(int latitude, int longitude, string calldata ISOCountry, uint idCategory) public view  returns(Asset[] memory){
+        Asset[] memory countryAssets = filterByCategory(ISOCountry, idCategory);
+        uint size = countryAssets.length;
+        for(uint i = 0; i < size ; i++){
+            for(uint j = 0; j < size-i-1 ; j++){
+                Asset memory a0 = countryAssets[j];
                 uint d0 = Utils.diagDist(latitude, a0.latitude, longitude, a0.longitude);
-                Asset memory a1 = countryAssets[i];
+
+                Asset memory a1 = countryAssets[j+1];
                 uint d1 = Utils.diagDist(latitude, a1.latitude, longitude, a1.longitude);
 
                 if(d1 < d0 ){
-                    countryAssets[i] = a0;
-                    countryAssets[i-1] = a1;
-                    sorted = false;   
+                    countryAssets[j] = a1;
+                    countryAssets[j+1] = a0;
                 }
             }
         }
-
         return countryAssets;
     }
 
-    function filterByCategory(string calldata ISOCountry, uint categoryId) view internal returns(Asset[] memory){
+    function filterByCategory(string calldata ISOCountry, uint idCategory) internal view returns(Asset[] memory){
         uint size = counterAssetsByCountry[ISOCountry];
         Asset[] memory tempAssets = new Asset[](size); 
         uint c = 0;
         for(uint i = 0; i < size; i++){
-            if(categoryId == 0){
+            if(idCategory == 0){
                 tempAssets[i] = assetsByCountry[ISOCountry][i];
-            }else{
-                if(assetsByCountry[ISOCountry][i].idCategory == categoryId){
-                    tempAssets[c] = assetsByCountry[ISOCountry][i];
-                    c++;
-                }
+            }else if(assetsByCountry[ISOCountry][i].idCategory == idCategory){
+                tempAssets[c] = assetsByCountry[ISOCountry][i];
+                c++;
             }
-
         }
-        return tempAssets;
+
+        if(idCategory == 0){
+            return tempAssets;
+        }else{
+            Asset[] memory outAssets = new Asset[](c);
+            for(uint i = 0; i < c; i++){
+                outAssets[i] = tempAssets[i];
+            }
+            return outAssets;
+        }
+
     }
 }
