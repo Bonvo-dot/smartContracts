@@ -1,20 +1,31 @@
 {
-  "name": "Bonvo project",
+  "name": "smartcontract",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bonvo smart contracts for polkadot hackaton",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bonvo-dot/smartContracts.git"
+  },
+  "keywords": [
+    "polkadot",
+    "moonbeam"
+  ],
+  "author": "Huascar Miranda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bonvo-dot/smartContracts/issues"
+  },
+  "homepage": "https://github.com/Bonvo-dot/smartContracts#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.7.3",
-    "hardhat": "^2.12.1"
+    "hardhat": "^2.12.2"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@openzeppelin/contracts": "^4.8.0",
     "dotenv": "^16.0.3"
   }
 }
