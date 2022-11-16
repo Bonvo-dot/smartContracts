@@ -5,6 +5,8 @@ Smart Contract
 ## **2. Link del github**
 
 https://github.com/Bonvo-dot/smartContracts
+https://github.com/Bonvo-dot/frontend
+https://github.com/Bonvo-dot/backend
 
 ## **3. Link del video**
 
