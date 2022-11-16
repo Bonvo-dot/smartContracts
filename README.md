@@ -61,6 +61,8 @@ Los contratos básicamente constan de dos structs principales, uno para guardar 
 
 Los usuarios añaden sus calificaciones en un modelo llamado RATE y registran el alquiler de sus bienes en otro modelo llamado RENT.
 
+Los contratos inteligentes incluyen modulos con un token ERC-20 y como token de la aplicación a para recompensar la participación de los usuarios. Incluye también un token ERC-721 para subir las primeras fotos de cada casa como un NFT.
+
 Para instalar el sistema, siga las instrucciones del archivo install.md
 
 ## **12. Enlace de la demostración del proyecto (url de la página)**
