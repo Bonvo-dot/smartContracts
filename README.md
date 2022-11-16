@@ -1,14 +1,19 @@
-## **1. Categoría del proyecto**
+**\*1. Categoría del proyecto\*\***
 
 Smart Contract
 
 ## **2. Link del github**
 
+Smart contracts desplegados en la red de moonbeam
 https://github.com/Bonvo-dot/smartContracts
+
+Frontend que demuestra el uso de los smartContracts (interacción mediante ether.js y web3 a los smart contracts)
+https://github.com/Bonvo-dot/frontend
+https://github.com/Bonvo-dot/backend
 
 ## **3. Link del video**
 
-https://www.youtube.com/watch?v=qMnzvS4WGTs
+[https://www.youtube.com/watch?v=qMnzvS4WGTs](https://www.youtube.com/watch?v=qMnzvS4WGTs)
 
 ## 4.Nombre del equipo
 
@@ -32,7 +37,7 @@ Bonvo Smart Contracts
 
 ## **8. Logotipo del proyecto.**
 
-![](https://lh3.googleusercontent.com/RAC0emOiHLn-rApRd2xil8pynL0Kdvor2zEOYCP5fL2LqVQ36YgVBnzW1PSEPZKJIIAmzLWNCBD1EYNWvpGhNS1bs_sbAVbpqgNPgPAtnae7miemqXKVhxw6QFZl5MhLftPR8_bBNkZVXKYx2KsIEb7LnCLfn3QcmZJq7SuYEFgoUJzim09NGjvywEO4rg)
+[![](https://camo.githubusercontent.com/8fbbfae26b2c59200a24f0e2b7aeee61dedf8942fc5ec2f9cc8008054e0f142f/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f52414330656d4f69484c6e2d72417052643278696c3870796e4c304b64766f72327a454f59435035664c324c7156513336596756426e7a5731505345505a4b4a4949416d7a4c574e4342443145594e57767047684e533162735f73624156627071674e50675041746e6165376d69656d71584b566878773651465a6c354d684c66745052385f62424e6b5a56584b5978324b73494562374c6e434c666e3351636d5a4a71375375594546676f554a7a696d30394e476a767977454f347267)](https://camo.githubusercontent.com/8fbbfae26b2c59200a24f0e2b7aeee61dedf8942fc5ec2f9cc8008054e0f142f/68747470733a2f2f6c68332e676f6f676c6575736572636f6e74656e742e636f6d2f52414330656d4f69484c6e2d72417052643278696c3870796e4c304b64766f72327a454f59435035664c324c7156513336596756426e7a5731505345505a4b4a4949416d7a4c574e4342443145594e57767047684e533162735f73624156627071674e50675041746e6165376d69656d71584b566878773651465a6c354d684c66745052385f62424e6b5a56584b5978324b73494562374c6e434c666e3351636d5a4a71375375594546676f554a7a696d30394e476a767977454f347267)
 
 ## **9. Descripción del problema**
 
@@ -60,4 +65,4 @@ Para instalar el sistema, siga las instrucciones del archivo install.md
 
 ## **12. Enlace de la demostración del proyecto (url de la página)**
 
-[https://bonvo-front-cicd-r7ee2dy4ea-rj.a.run.app/#/my-account](https://bonvo-front-cicd-r7ee2dy4ea-rj.a.run.app/#/my-account)
+[https://bonvo-front-cicd-r7ee2dy4ea-rj.a.run.app/#/my-account](https://bonvo-front-cicd-r7ee2dy4ea-rj.a.run.app/#/my-account)](https://stackedit.io/).

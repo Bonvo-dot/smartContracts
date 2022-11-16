@@ -15,8 +15,8 @@ interface IBonvo {
         address owner;
         uint price;
         string[] images;
-        int latitude;
-        int longitude;
+        string latitude;
+        string longitude;
         uint8 idCategory;
         string ISOCountry;
         StaticDataAsset staticData;
