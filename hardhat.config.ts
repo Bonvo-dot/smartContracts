@@ -6,24 +6,25 @@ dotenv.config();
 const config: HardhatUserConfig = {
   solidity: "0.8.9",
   // networks: {
-  //   mumbai: {
-  //     url: process.env.POLYGON_RPC,
-  //     accounts: [process.env.PRIVATE_KEY || "default"],
-  //   },
   // },
   // etherscan: {
   //   apiKey: process.env.POLYGONSCAN_API_KEY,
   // },
   networks: {
+    mumbai: {
+      url: "https://polygon-mumbai.g.alchemy.com/v2/Ksd4J1QVWaOJAJJNbr_nzTcJBJU-6uP3",
+      chainId: 80001,
+      accounts: [process.env.PRIVATE_KEY || "default"],
+    },
     moonbeam: {
-      url: process.env.MOONBASE_RPC,
+      url: "https://rpc.api.moonbase.moonbeam.network",
       chainId: 0x507,
       accounts: [process.env.PRIVATE_KEY || "default"],
     },
   },
   etherscan: {
-    // apiKey: process.env.POLYGONSCAN_API_KEY,
-    apiKey: process.env.MOONBASESCAN_API_KEY,
+    apiKey: process.env.API_KEY_MUMBAI,
+    // apiKey: process.env.MOONBASESCAN_API_KEY,
   },
 };
 

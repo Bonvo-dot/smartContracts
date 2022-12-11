@@ -6,24 +6,24 @@ interface IBonvo {
         string title;
         string description;
         string location;
-        uint rooms;
-        uint size;
+        uint256 rooms;
+        uint256 size;
     }
     struct Asset {
-        uint tokenId;
-        uint timestamp;
+        uint256 tokenId;
+        uint256 timestamp;
         address owner;
-        uint price;
+        uint256 price;
         string[] images;
-        string latitude;
-        string longitude;
+        int256 latitude;
+        int256 longitude;
         uint8 idCategory;
         string ISOCountry;
         StaticDataAsset staticData;
     }
 
     struct AssetCategory {
-        uint idCategory;
+        uint256 idCategory;
         string name;
         string description;
     }
@@ -31,24 +31,23 @@ interface IBonvo {
     struct User {
         address idUser;
         string firstName;
-        string lastName;  
+        string lastName;
         string isoCountry;
-        int reputation;
+        int256 reputation;
         string image;
     }
-    
+
     struct Rent {
-        uint idRent;
-        uint assetId;
+        uint256 idRent;
+        uint256 assetId;
         address renter;
     }
 
     struct Rate {
-        uint idRate;
+        uint256 idRate;
         uint8 rate;
         string argue;
         address rater;
-        uint assetId;
+        uint256 assetId;
     }
-
 }

@@ -2,18 +2,18 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
-import './IBonvo.sol';
-import './TokenBonvo.sol';
-import './Rewards.sol';
-import './NftAsset.sol';
-import './Assets.sol';
-import './Rates.sol';
-import './Rents.sol';
+import "./IBonvo.sol";
+import "./TokenBonvo.sol";
+import "./Rewards.sol";
+import "./NftAsset.sol";
+import "./Assets.sol";
+import "./Rates.sol";
+import "./Rents.sol";
 
-contract Bonvo is IBonvo,  Assets, Rates, Rents {
+contract Bonvo is IBonvo, Assets, Rates, Rents {
     using Strings for uint256;
     address public owner;
-    mapping (address => User) public users;
+    mapping(address => User) public users;
     NftAsset public nft = new NftAsset();
     TokenBonvo public BNV;
     Rewards public r = new Rewards();
@@ -26,20 +26,24 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
     function createUser(address idUser, User memory _user) external {
         require(idUser != address(0), "Valid wallet address required");
         users[idUser] = _user;
-    } 
+    }
 
-    function addRent(uint _tokenId) public {
+    function addRent(uint256 _tokenId) public {
         require(assetsByTokenId[_tokenId].latitude != 0, "Inexistent asset");
-        uint id = rents.length;
+        uint256 id = rents.length;
         saveRent(id, _tokenId);
         BNV.dTransfer(owner, msg.sender, r.RENT_REWARD());
     }
 
-    function addRate(uint8 _rate, string calldata _argue, uint _tokenId) public {
+    function addRate(
+        uint8 _rate,
+        string calldata _argue,
+        uint256 _tokenId
+    ) public {
         require(_rate != 0, "Not valid rate");
         require(assetsByTokenId[_tokenId].latitude != 0, "Inexistent asset");
 
-        uint id = ratesArray.length;
+        uint256 id = ratesArray.length;
         Rate memory rate = Rate({
             idRate: id,
             rate: _rate,
@@ -54,14 +58,13 @@ contract Bonvo is IBonvo,  Assets, Rates, Rents {
         BNV.dTransfer(owner, msg.sender, r.RATE_REWARD());
     }
 
-    event Allowance(string, uint);
+    event Allowance(string, uint256);
 
     function createAsset(Asset memory _asset) external {
-        uint tokenId = nft.mint(msg.sender, _asset.images[0]);
+        uint256 tokenId = nft.mint(msg.sender, _asset.images[0]);
         saveInMapping(_asset, tokenId);
         BNV.dTransfer(owner, msg.sender, r.CREATE_ASSET_REWARD());
     }
-
 }
 
 /**
